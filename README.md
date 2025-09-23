@@ -14,11 +14,11 @@ This repository is a quick setup for how you can use `Continue.DEV` powered by D
 │  └─────────────┘        └──────────────┘                   │
 │                               │ ▲                          │
 └───────────────────────────────┼─┼──────────────────────────┘
-                               │ │
-                               │ │ HTTPS
-                               │ │ (Private & Secure)
-                               │ │
-                               ▼ │
+                                │ │
+                                │ │ HTTPS
+                                │ │ (Private & Secure)
+                                │ │
+                                ▼ │
                    ┌───────────────────────┐
                    │   Azure Databricks    │
                    │   ┌─────────────┐     │
