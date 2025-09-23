@@ -4,6 +4,7 @@ This repository is a quick setup for how you can use `Continue.DEV` powered by D
 
 ## Architectural View
 
+```ascii
 ┌────────────────────────────────────────────────────────────┐
 │                   Developer Workstation                    │
 │                                                            │
@@ -28,7 +29,7 @@ This repository is a quick setup for how you can use `Continue.DEV` powered by D
                    │   └─────────────┘     │
                    │  Private Workspace    │
                    └───────────────────────┘
-
+```
          🔒 Fully Private: No data leaves your infrastructure
 
 ## Prerequisites
