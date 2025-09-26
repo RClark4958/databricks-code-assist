@@ -42,6 +42,12 @@ This repository is a quick setup for how you can use `Continue.DEV` powered by D
 
 ![Demo GIF](./img/CodeAssistDABContinuous.gif)
 
+## LiteLLM Installation
+
+```bash
+pip install litellm
+```
+
 ## Continue.dev Installation
 
 ### Install Extension
