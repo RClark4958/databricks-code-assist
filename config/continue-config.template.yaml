@@ -3,7 +3,7 @@ version: 1.0.0
 schema: v1
 
 models:
-  - name: Claude-Sonnet-4
+  - name: Databricks-Claude-Sonnet-4
     provider: openai
     model: claude-sonnet-4  # Must match model_name in LiteLLM config
     apiBase: http://localhost:4000/v1  # LiteLLM proxy URL with /v1

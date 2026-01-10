@@ -1,0 +1,53 @@
+# Aider Configuration Template
+# This file configures Aider to use Databricks Claude Sonnet 4 via LiteLLM proxy
+#
+# Usage:
+#   sed -e "s/\${WORKSPACE_HOST}/$WORKSPACE_HOST/g" \
+#       -e "s/\${WORKSPACE_API_TOKEN}/$WORKSPACE_API_TOKEN/g" \
+#       config/aider-config.template.yml > ~/.aider.conf.yml
+#
+# Or use the provided run script which handles this automatically:
+#   ./scripts/setup_aider.sh $WORKSPACE_HOST $WORKSPACE_API_TOKEN
+
+# Model Configuration
+# Uses the LiteLLM proxy running on localhost:4000
+model: openai/claude-sonnet-4
+
+# OpenAI-compatible API settings
+# LiteLLM proxy exposes an OpenAI-compatible endpoint
+openai-api-base: http://localhost:4000/v1
+openai-api-key: dummy  # Any value works if LiteLLM has no auth
+
+# Display Settings
+pretty: true        # Enable syntax highlighting and formatted output
+dark-mode: true     # Use dark mode color scheme
+show-diffs: true    # Show diffs before applying changes
+
+# Git Integration
+auto-commits: false # Don't automatically commit changes (manual control recommended)
+dirty-commits: true # Allow commits even with dirty working tree
+attribute-author: false
+attribute-committer: false
+
+# Behavior Settings
+stream: true        # Stream responses for better interactivity
+auto-lint: false    # Disable automatic linting (can be slow)
+auto-test: false    # Disable automatic testing (can be slow)
+
+# Edit Settings
+edit-format: diff   # Use diff format for edits (alternatives: whole, udiff)
+
+# Chat Settings
+# chat-language: en # Uncomment to set chat language explicitly
+
+# File Management
+# auto-commits: false already set above
+# dirty-commits: true already set above
+
+# Model Parameters (passed through to the API)
+# These override defaults but can be adjusted based on your needs
+# Uncomment and modify as needed:
+# model-settings:
+#   temperature: 0.7
+#   max_tokens: 8192
+#   top_p: 0.9

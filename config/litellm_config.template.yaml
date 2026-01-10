@@ -7,5 +7,7 @@ model_list:
       max_tokens: 8192
 
 litellm_settings:
+  # drop_params: false - Keeps all parameters when making API calls instead of filtering them out
   drop_params: false
+  # set_verbose: true - Enables detailed logging for debugging and monitoring API requests/responses
   set_verbose: true
