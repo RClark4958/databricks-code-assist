@@ -1,6 +1,6 @@
 # 🚀 Databricks LLM AI Coding Assistants Setup Guide
 
-Quick setup for using AI coding assistants (Continue.dev or Aider) powered by Databricks LLMs via LiteLLM.
+Quick setup for using AI coding assistants (Continue.dev, Aider, or Claude Code) powered by Databricks LLMs via LiteLLM.
 
 ## 📺 Demo
 
@@ -93,10 +93,54 @@ cd /path/to/project
 aider --model openai/claude-sonnet-4
 ```
 
+## 🅲 Claude Code Setup
+
+Claude Code is Anthropic's official CLI for Claude, offering advanced agentic coding capabilities.
+
+> **Note:** Claude Code requires a separate proxy stack (ports 4001 + 4010) because it uses the Anthropic API format instead of OpenAI format. No Anthropic account is required.
+
+### Prerequisites
+- Node.js 18+ (`brew install node` or [nodejs.org](https://nodejs.org))
+
+### Quick Setup Script
+```bash
+chmod +x ./scripts/setup_claude_code.sh
+./scripts/setup_claude_code.sh $WORKSPACE_HOST $WORKSPACE_API_TOKEN
+```
+
+### Start Using
+```bash
+# Run Claude Code
+./scripts/claude-code.sh
+
+# Check proxy status
+./scripts/claude-code.sh --status
+
+# One-off prompt
+./scripts/claude-code.sh -p "What is 2+2?"
+
+# Stop proxies when done
+./scripts/claude-code.sh --stop
+```
+
+### Architecture
+```
+Claude Code -> Filter Proxy (:4001) -> LiteLLM (:4010) -> Databricks
+```
+
+The filter proxy strips "thinking" blocks that Databricks doesn't support.
+
+### Create Shell Alias (Optional)
+```bash
+# Add to ~/.zshrc or ~/.bashrc
+alias claude='/path/to/databricks-code-assist/scripts/claude-code.sh'
+```
+
 ## 🎉 That's It!
 
-Both tools use the same LiteLLM proxy. Choose the one that fits your workflow:
-- **Continue.dev**: GUI in VS Code
-- **Aider**: Terminal CLI
+All tools use LiteLLM to route requests to Databricks. Choose what fits your workflow:
+- **Continue.dev**: GUI in VS Code (port 4000)
+- **Aider**: Terminal CLI (port 4000)
+- **Claude Code**: Advanced agentic CLI (ports 4001 + 4010)
 
-Keep the LiteLLM proxy running while using either tool.
+Keep the respective proxy running while using each tool.
