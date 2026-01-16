@@ -114,7 +114,11 @@ This creates `./scripts/claude-code.sh` wrapper and starts the proxy stack.
 ```bash
 # Run Claude Code (wrapper created by setup script)
 ./scripts/claude-code.sh
+```
 
+> **First run:** When prompted about the custom API endpoint, select **Yes** to accept it. This allows Claude Code to use the Databricks proxy instead of Anthropic's servers.
+
+```bash
 # Check proxy status
 ./scripts/claude-code.sh --status
 
