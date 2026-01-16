@@ -108,9 +108,11 @@ chmod +x ./scripts/setup_claude_code.sh
 ./scripts/setup_claude_code.sh $WORKSPACE_HOST $WORKSPACE_API_TOKEN
 ```
 
+This creates `./scripts/claude-code.sh` wrapper and starts the proxy stack.
+
 ### Start Using
 ```bash
-# Run Claude Code
+# Run Claude Code (wrapper created by setup script)
 ./scripts/claude-code.sh
 
 # Check proxy status
