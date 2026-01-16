@@ -136,6 +136,9 @@ Claude Code -> Filter Proxy (:4001) -> LiteLLM (:4010) -> Databricks
 
 The filter proxy strips "thinking" blocks that Databricks doesn't support.
 
+### Configuration Path
+Claude Code configuration is stored in `.claude-code-home/` within this project directory, not in `~/.claude/`.
+
 ### Create Shell Alias (Optional)
 ```bash
 # Add to ~/.zshrc or ~/.bashrc
