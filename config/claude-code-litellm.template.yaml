@@ -1,0 +1,76 @@
+# LiteLLM Configuration for Claude Code -> Databricks
+# This config accepts Anthropic API format and routes to Databricks-hosted Claude models
+#
+# Architecture:
+#   Claude Code -> Filter Proxy (4001) -> LiteLLM (4010) -> Databricks
+#
+# Note: Claude Code sends requests in Anthropic API format (/v1/messages),
+# which LiteLLM can accept and route to the Databricks provider.
+
+model_list:
+  # Claude Opus 4.5 - Most capable model
+  - model_name: claude-opus-4-5-20251101
+    litellm_params:
+      model: databricks/databricks-claude-opus-4-5
+      api_key: ${WORKSPACE_API_TOKEN}
+      api_base: https://${WORKSPACE_HOST}/serving-endpoints
+      max_tokens: 16384
+
+  # Generic opus alias
+  - model_name: claude-3-opus
+    litellm_params:
+      model: databricks/databricks-claude-opus-4-5
+      api_key: ${WORKSPACE_API_TOKEN}
+      api_base: https://${WORKSPACE_HOST}/serving-endpoints
+      max_tokens: 16384
+
+  # Claude Sonnet 4.5 - Claude Code's default model
+  - model_name: claude-sonnet-4-5-20250929
+    litellm_params:
+      model: databricks/databricks-claude-sonnet-4
+      api_key: ${WORKSPACE_API_TOKEN}
+      api_base: https://${WORKSPACE_HOST}/serving-endpoints
+      max_tokens: 8192
+
+  # Claude Sonnet 4 variations
+  - model_name: claude-sonnet-4-20250514
+    litellm_params:
+      model: databricks/databricks-claude-sonnet-4
+      api_key: ${WORKSPACE_API_TOKEN}
+      api_base: https://${WORKSPACE_HOST}/serving-endpoints
+      max_tokens: 8192
+
+  - model_name: claude-3-5-sonnet
+    litellm_params:
+      model: databricks/databricks-claude-sonnet-4
+      api_key: ${WORKSPACE_API_TOKEN}
+      api_base: https://${WORKSPACE_HOST}/serving-endpoints
+      max_tokens: 8192
+
+  - model_name: claude-3-5-sonnet-20241022
+    litellm_params:
+      model: databricks/databricks-claude-sonnet-4
+      api_key: ${WORKSPACE_API_TOKEN}
+      api_base: https://${WORKSPACE_HOST}/serving-endpoints
+      max_tokens: 8192
+
+  # Claude Haiku - fallback to Sonnet if Haiku not available
+  - model_name: claude-3-5-haiku-20241022
+    litellm_params:
+      model: databricks/databricks-claude-sonnet-4
+      api_key: ${WORKSPACE_API_TOKEN}
+      api_base: https://${WORKSPACE_HOST}/serving-endpoints
+      max_tokens: 8192
+
+  - model_name: claude-haiku-3-5-20241022
+    litellm_params:
+      model: databricks/databricks-claude-sonnet-4
+      api_key: ${WORKSPACE_API_TOKEN}
+      api_base: https://${WORKSPACE_HOST}/serving-endpoints
+      max_tokens: 8192
+
+litellm_settings:
+  # Drop unsupported params (like thinking) - required for Databricks compatibility
+  drop_params: true
+  # Enable verbose logging for debugging
+  set_verbose: true
