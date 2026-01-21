@@ -338,6 +338,9 @@ export HOME="$CLAUDE_HOME"
 export ANTHROPIC_BASE_URL="http://localhost:$FILTER_PROXY_PORT"
 export ANTHROPIC_API_KEY="databricks-via-litellm"
 
+# Disable telemetry (Statsig) - opt out of usage metrics collection
+export DISABLE_TELEMETRY=1
+
 # Preserve access to common config files
 export DATABRICKS_CONFIG_FILE="$ORIGINAL_HOME/.databrickscfg"
 for config_file in .gitconfig .ssh .aws .azure .npmrc .pypirc; do
