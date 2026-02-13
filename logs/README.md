@@ -1,1 +1,0 @@
-Logs from LiteLLM will be generated here, helpful for debugging.
