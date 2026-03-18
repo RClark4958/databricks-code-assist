@@ -34,10 +34,13 @@ LITELLM_URL = "http://localhost:4010"
 
 
 def strip_thinking_from_messages(messages):
-    """Remove thinking blocks from message content.
+    """Remove thinking blocks and fix empty tool results in message content.
 
     Claude Code includes thinking blocks from previous turns in the message
     history. Databricks endpoints don't support this format, so we strip them.
+
+    Also ensures tool_result blocks always have content, as Databricks rejects
+    tool messages with missing/empty content.
     """
     if not messages:
         return messages
@@ -50,11 +53,27 @@ def strip_thinking_from_messages(messages):
         if isinstance(msg_copy.get('content'), list):
             filtered_content = []
             for block in msg_copy['content']:
-                # Skip thinking and redacted_thinking blocks
                 if isinstance(block, dict):
                     block_type = block.get('type', '')
+                    # Skip thinking and redacted_thinking blocks
                     if block_type in ('thinking', 'redacted_thinking'):
                         continue
+                    # Ensure tool_result blocks always have content
+                    if block_type == 'tool_result':
+                        content = block.get('content')
+                        if not content:
+                            block['content'] = "(no output)"
+                        elif isinstance(content, list):
+                            # Filter empty text blocks within tool results
+                            non_empty = [
+                                c for c in content
+                                if not (isinstance(c, dict) and c.get('type') == 'text'
+                                        and not c.get('text', '').strip())
+                            ]
+                            if not non_empty:
+                                block['content'] = "(no output)"
+                            else:
+                                block['content'] = non_empty
                 filtered_content.append(block)
 
             # If all content was thinking blocks, keep a minimal placeholder
@@ -62,6 +81,14 @@ def strip_thinking_from_messages(messages):
                 filtered_content = [{"type": "text", "text": "..."}]
 
             msg_copy['content'] = filtered_content
+
+        # Handle string content that's empty (can happen with tool role messages)
+        elif isinstance(msg_copy.get('content'), str) and not msg_copy['content'].strip():
+            msg_copy['content'] = "(no output)"
+
+        # Handle null/missing content on tool messages
+        elif msg_copy.get('role') == 'tool' and not msg_copy.get('content'):
+            msg_copy['content'] = "(no output)"
 
         cleaned.append(msg_copy)
 
@@ -72,9 +99,10 @@ def strip_thinking_from_request(body: dict) -> dict:
     """Strip thinking-related params and content from request body."""
     body = copy.deepcopy(body)
 
-    # Remove thinking parameter if present
-    if 'thinking' in body:
-        del body['thinking']
+    # Remove unsupported parameters
+    for param in ('thinking', 'context_management'):
+        if param in body:
+            del body[param]
 
     # Strip thinking blocks from messages
     if 'messages' in body:

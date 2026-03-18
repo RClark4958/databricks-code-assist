@@ -1,7 +1,6 @@
 # Generated configs (contain credentials)
 litellm_config.yaml
 claude-code-litellm.yaml
-
 # Logs
 logs/*.log
 logs/*.pid
